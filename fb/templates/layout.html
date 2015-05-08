@@ -2,17 +2,17 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>AnonyMate</title>
+    <title>My facebook app</title>
     <link rel="stylesheet" href="{% static 'css\bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css\main.css' %}">
   </head>
   <body>
-   {% if  user.is_authenticated %}
+
     <div class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <a class="navbar-brand" href="{% url 'index' %}">
-            <img src="{% static 'img/logo.png' %}">
+            <img src="{% static 'img/logo-fb.svg' %}">
           </a>
         </div>
         <div class="collapse navbar-collapse">
@@ -28,10 +28,7 @@
         </div>
       </div>
     </div>
-    {% endif %}
-    {% if not user.is_authenticated %}
-    <img src="{% static 'img/logo.png' %}">
-    {% endif %}
+
     <div class="container">
       {% block content %}
       {% endblock %}
