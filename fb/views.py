@@ -5,7 +5,6 @@ from django.contrib.auth.decorators import login_required
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.http import HttpResponseForbidden
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
 
 from fb.models import UserPost, UserPostComment, UserProfile, Album, Photo
 from fb.forms import (
@@ -24,7 +23,6 @@ def index(request):
             text = form.cleaned_data['text']
             post = UserPost(text=text, author=request.user)
             post.save()
-            return HttpResponseRedirect('/')
 
     context = {
         'posts': posts,
@@ -35,9 +33,7 @@ def index(request):
 
 @login_required
 def post_details(request, pk):
-    post = UserPost.objects.get(pk=pk) 
-
-    #k=pk_get)
+    post = UserPost.objects.get(pk=pk)
 
     if request.method == 'GET':
         form = UserPostCommentForm()
@@ -71,8 +67,8 @@ def login_view(request):
     if request.method == 'POST':
         login_form = UserLogin(request.POST)
         username = request.POST['username']
-        # password = request.POST['password']
-        user = authenticate(username=username, password='*')
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
             return redirect('/')
