@@ -1,11 +1,10 @@
 from django.core.urlresolvers import reverse
-from django.shortcuts import render, redirect, render_to_response
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.http import HttpResponseForbidden
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
 
 from fb.models import UserPost, UserPostComment, UserProfile, Album, Photo
 from fb.forms import (
@@ -24,7 +23,6 @@ def index(request):
             text = form.cleaned_data['text']
             post = UserPost(text=text, author=request.user)
             post.save()
-            return HttpResponseRedirect('index.html')
 
     context = {
         'posts': posts,
@@ -200,7 +198,7 @@ def delete_post_view(request, pk):
     post.delete()
     return redirect(reverse('index'))
 
-@login_required
+
 def delete_comment_view(request, pk):
     comment = UserPostComment.objects.get(pk=pk)
     post_pk = comment.post.pk
